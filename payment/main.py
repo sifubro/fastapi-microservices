@@ -66,4 +66,6 @@ def order_completed(order: Order):
     time.sleep(5)
     order.status = 'completed'
     order.save()
+    # send event to redis when the order is completed
+    # '*' means the ID of the event is auto-generated
     redis.xadd('order_completed', order.dict(), '*')
